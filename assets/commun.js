@@ -1,7 +1,7 @@
 // Comportements communs des démos (copié dans demo/assets par outils/demo) : en-tête, menu, bannière cookies,
 // avant/après, filtres, formulaire factice. Ce qui est propre à une commande va dans son assets/site.js.
-// Code navigateur : eslint.config.js ne connaît que commandes/*/demo, d'où cette liste (localStorage est déjà connu de Node)
-/* global document, window, location */
+// Code navigateur : eslint.config.js donne les globales du navigateur à ce fichier et à sa copie dans commandes/*/demo/assets ;
+// pas de commentaire /* global */ ici, la copie le ferait refuser par la CI (no-redeclare, 490850).
 (function () {
   "use strict";
 

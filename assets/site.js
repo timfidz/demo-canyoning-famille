@@ -1,4 +1,3 @@
-/* global document, window, IntersectionObserver */
 (function () {
   "use strict";
   // Hauteur réelle de l'en-tête (la barre d'ancres et le cartouche se calent dessous)
