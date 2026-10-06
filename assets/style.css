@@ -1,0 +1,158 @@
+/* Démo 490850 : ce qui est propre à cette page (palette, tête, barre d'ancres, cartouche de prix, programme, photos, dates) */
+:root { --fond: #F5F8FA; --surface: #FFFFFF; --encre: #14232B; --texte: #2E3F49; --discret: #56676F; --accent: #0A6F91; --accent-fonce: #064F68; --accent-pale: #DDF3FA; --chaud: #9A4A12; --bleu-aet: #09B0E2; --prix: #FFE27A; --ok: #1E6B3A; --complet: #8A2B2B; --pied-fond: #064F68; --pied-texte: #D8EAF1; --police-titre: "Inter", system-ui, sans-serif; --rayon: 14px; --bord: #D5DFE4; }
+h1, h2, h3 { font-weight: 700; letter-spacing: -.01em; }
+h2 { font-size: clamp(1.45rem, 2.6vw, 1.9rem); margin-bottom: .7em; }
+h3 { font-size: 1.1rem; }
+main section { padding: 0; }
+.marque img { height: 56px; width: auto; }
+.entete .conteneur { min-height: 84px; }
+.entete .nav a { font-size: .92rem; padding: 9px 11px; }
+
+/* Tête : grande photo, titre et repères (comme le modèle) */
+.tete { position: relative; min-height: 440px; display: flex; align-items: flex-end; color: #fff; background: var(--encre); overflow: hidden; }
+.tete img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.tete::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(10, 25, 35, .05) 30%, rgba(10, 25, 35, .78) 100%); }
+.tete .conteneur { position: relative; z-index: 1; padding: 120px 0 34px; }
+.fil { font-size: .9rem; margin: 0 0 8px; }
+.fil a { color: #fff; }
+.tete h1 { color: #fff; font-size: clamp(1.7rem, 4vw, 2.7rem); max-width: 900px; margin-bottom: 10px; }
+.tete .sous { font-size: 1.1rem; margin: 0 0 14px; max-width: 760px; }
+.reperes { display: flex; flex-wrap: wrap; gap: 8px 22px; font-size: .95rem; font-weight: 500; margin: 0; padding: 0; list-style: none; }
+.reperes li { display: inline-flex; align-items: center; gap: 8px; }
+.reperes svg { width: 18px; height: 18px; }
+
+/* Barre d'ancres qui suit le défilement, sous l'en-tête */
+.ancres { position: sticky; top: var(--entete, 84px); z-index: 40; background: var(--surface); border-bottom: 1px solid var(--bord); }
+.ancres ul { list-style: none; margin: 0; padding: 0; display: flex; gap: 2px; overflow-x: auto; scrollbar-width: none; }
+.ancres ul::-webkit-scrollbar { display: none; }
+.ancres a { display: block; padding: 16px 14px 13px; white-space: nowrap; color: var(--texte); text-decoration: none; font-weight: 500; font-size: .95rem; border-bottom: 3px solid transparent; }
+.ancres a:hover { color: var(--accent-fonce); }
+.ancres a.active { color: var(--accent-fonce); border-bottom-color: var(--accent); }
+
+/* Deux colonnes : le contenu, et le cartouche de prix fixe à droite */
+.colonnes { display: grid; grid-template-columns: minmax(0, 1fr) 320px; gap: 40px; align-items: start; padding: 36px 0 72px; }
+.contenu > section { padding: 36px 0; border-bottom: 1px solid var(--bord); scroll-margin-top: calc(var(--entete, 84px) + 66px); }
+.contenu > section:first-child { padding-top: 8px; }
+.contenu > section:last-child { border-bottom: 0; }
+.cartouche { position: sticky; top: calc(var(--entete, 84px) + 66px); background: var(--surface); border-radius: var(--rayon); padding: 22px; box-shadow: var(--ombre); }
+.cartouche .des { color: var(--discret); font-size: .9rem; margin: 0 0 4px; }
+.cartouche .montant { display: flex; align-items: baseline; gap: 8px; margin: 0 0 6px; }
+.cartouche .montant strong { font-size: 1.9rem; background: var(--prix); color: var(--encre); padding: 2px 10px; border-radius: 8px; }
+.cartouche .precision { font-size: .88rem; color: var(--discret); margin: 0 0 16px; }
+.cartouche .boutons { margin-top: 0; flex-direction: column; gap: 10px; }
+.cartouche .bouton { width: 100%; white-space: nowrap; padding: 14px 12px; font-size: .95rem; }
+.cartouche .horaires { font-size: .88rem; color: var(--discret); margin: 14px 0 0; text-align: center; }
+.cartouche .depart { margin: 16px 0 0; padding-top: 14px; border-top: 1px solid var(--bord); font-size: .92rem; }
+.cartouche .depart strong { display: block; color: var(--encre); }
+
+/* En résumé : grille à icônes */
+.resume { display: grid; grid-template-columns: 1fr 1fr; gap: 0 32px; background: var(--surface); border-radius: var(--rayon); padding: 8px 22px; box-shadow: var(--ombre); margin: 0; }
+.resume > div { display: grid; grid-template-columns: 22px 110px 1fr; gap: 12px; align-items: start; padding: 13px 0; border-bottom: 1px solid var(--bord); font-size: .95rem; }
+.resume > div:nth-last-child(-n+2) { border-bottom: 0; }
+.resume svg { width: 22px; height: 22px; color: var(--accent); margin-top: 1px; }
+.resume dt { font-weight: 600; color: var(--encre); margin: 0; }
+.resume dd { margin: 0; }
+.points { list-style: none; margin: 18px 0 0; padding: 0; display: grid; gap: 10px; }
+.points li { display: flex; gap: 10px; align-items: flex-start; }
+.points svg { width: 20px; height: 20px; color: var(--ok); flex: none; margin-top: 3px; }
+
+/* Programme jour par jour, en accordéon */
+.jours { display: grid; gap: 10px; }
+.jour { background: var(--surface); border-radius: var(--rayon); box-shadow: var(--ombre); overflow: hidden; }
+.jour summary { list-style: none; cursor: pointer; display: grid; grid-template-columns: 64px 1fr 28px; gap: 14px; align-items: center; padding: 14px 18px; }
+.jour summary::-webkit-details-marker { display: none; }
+.jour summary:hover { background: var(--accent-pale); }
+.jour .num { font-size: .78rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--accent); }
+.jour .num span { display: block; font-size: 1.3rem; letter-spacing: 0; color: var(--encre); }
+.jour summary h3 { margin: 0; font-size: 1.05rem; }
+.jour summary .quand { display: block; font-weight: 400; color: var(--discret); font-size: .88rem; }
+.jour .chevron { width: 28px; height: 28px; border-radius: 50%; background: var(--accent-pale); color: var(--accent-fonce); display: grid; place-items: center; transition: transform .2s; }
+.jour[open] .chevron { transform: rotate(180deg); }
+.jour .corps { padding: 0 18px 18px 96px; }
+.jour .corps p { margin-bottom: .8em; }
+.jour .mesures { display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 12px; padding: 0; list-style: none; }
+.jour .mesures li { background: var(--accent-pale); color: var(--accent-fonce); border-radius: 999px; padding: 4px 12px; font-size: .85rem; font-weight: 500; }
+
+/* Vidéos : vignette, la lecture ne charge YouTube qu'au clic */
+.video { position: relative; display: block; width: 100%; max-width: 560px; aspect-ratio: 16 / 9; border: 0; padding: 0; border-radius: 12px; overflow: hidden; background: var(--encre); cursor: pointer; }
+.video img { width: 100%; height: 100%; object-fit: cover; }
+.video .lecture { position: absolute; inset: 0; display: grid; place-items: center; color: #fff; font-weight: 600; font-size: .95rem; background: rgba(10, 25, 35, .25); }
+.video .lecture span { display: inline-flex; align-items: center; gap: 10px; background: rgba(10, 25, 35, .75); padding: 10px 18px; border-radius: 999px; }
+.video .lecture svg { width: 22px; height: 22px; }
+.video:hover .lecture { background: rgba(10, 25, 35, .4); }
+.video iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+.videos { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.videos .video { max-width: none; }
+
+/* Photos : mosaïque régulière */
+.mosaique { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+.mosaique figure { margin: 0; border-radius: 12px; overflow: hidden; aspect-ratio: 10 / 9; background: var(--accent-pale); }
+.mosaique img { width: 100%; height: 100%; object-fit: cover; }
+.mosaique figure:first-child { grid-column: span 2; grid-row: span 2; aspect-ratio: auto; }
+
+/* Hébergement : carte texte + photos */
+.carte { background: var(--surface); border-radius: var(--rayon); box-shadow: var(--ombre); padding: 22px; }
+.carte ul { margin: 0 0 1em; padding-left: 20px; }
+.deux { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+
+/* Dates et prix */
+.dates { list-style: none; margin: 0 0 20px; padding: 0; display: grid; gap: 8px; }
+.dates li { display: grid; grid-template-columns: 1fr auto; gap: 12px; align-items: center; background: var(--surface); border-radius: 10px; padding: 12px 16px; box-shadow: var(--ombre); }
+.dates .saison { grid-column: 1 / -1; background: none; box-shadow: none; padding: 10px 0 0; font-weight: 700; color: var(--encre); }
+.dates .etat { font-size: .85rem; font-weight: 600; padding: 4px 12px; border-radius: 999px; }
+.dates .etat.complet { color: var(--complet); background: #F8E4E4; }
+.dates .etat.ok { color: var(--ok); background: #E1F2E6; }
+.dates .remise { font-size: .85rem; color: var(--discret); }
+.tarifs { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 24px; }
+.tarif { background: var(--surface); border-radius: var(--rayon); box-shadow: var(--ombre); padding: 18px; }
+.tarif h3 { font-size: .95rem; color: var(--discret); font-weight: 600; margin-bottom: 8px; }
+.tarif .montant { font-size: 1.6rem; font-weight: 700; color: var(--encre); }
+.tarif .montant small { font-size: .88rem; font-weight: 500; color: var(--discret); }
+.tarif p { margin: 4px 0 0; font-size: .9rem; }
+.compris { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
+.compris li { display: flex; gap: 10px; align-items: flex-start; }
+.compris svg { width: 20px; height: 20px; flex: none; margin-top: 3px; }
+.compris.oui svg { color: var(--ok); }
+.compris.non svg { color: var(--complet); }
+
+/* Infos pratiques : accordéons */
+.infos { display: grid; gap: 10px; }
+.infos details { background: var(--surface); border-radius: var(--rayon); box-shadow: var(--ombre); }
+.infos summary { list-style: none; cursor: pointer; display: flex; justify-content: space-between; align-items: center; gap: 14px; padding: 16px 18px; font-weight: 600; color: var(--encre); }
+.infos summary::-webkit-details-marker { display: none; }
+.infos summary svg { width: 22px; height: 22px; flex: none; color: var(--accent-fonce); transition: transform .2s; }
+.infos details[open] summary svg { transform: rotate(180deg); }
+.infos details[open] summary { border-bottom: 1px solid var(--bord); }
+.infos .corps { padding: 14px 18px 18px; }
+.infos .corps ul { padding-left: 20px; margin: 0 0 1em; }
+.infos .corps p:last-child, .infos .corps ul:last-child { margin-bottom: 0; }
+
+/* Réservation */
+.reservation { background: var(--accent-pale); border-radius: var(--rayon); padding: 26px; }
+.reservation .boutons { margin-top: 18px; }
+.appel { font-size: 1.3rem; font-weight: 700; color: var(--encre); }
+.appel a { color: var(--accent-fonce); text-decoration: none; }
+
+@media (max-width: 1000px) {
+  .colonnes { grid-template-columns: 1fr; gap: 0; }
+  .cartouche { position: static; margin-bottom: 20px; order: -1; }
+
+}
+@media (max-width: 900px) {
+
+  .entete .conteneur { min-height: 76px; }
+  .marque img { height: 48px; }
+  .tete { min-height: 360px; }
+  .tete .conteneur { padding-top: 80px; }
+  .resume { grid-template-columns: 1fr; }
+  .resume > div:nth-last-child(2) { border-bottom: 1px solid var(--bord); }
+  .jour .corps { padding-left: 18px; }
+  .videos, .deux, .tarifs { grid-template-columns: 1fr; }
+}
+@media (max-width: 640px) {
+  .mosaique { grid-template-columns: 1fr 1fr; }
+  .mosaique figure:first-child { grid-column: span 2; grid-row: auto; aspect-ratio: 2 / 1; }
+  .resume > div { grid-template-columns: 22px 1fr; }
+  .resume dd { grid-column: 2; }
+  .jour summary { grid-template-columns: 52px 1fr 28px; }
+}

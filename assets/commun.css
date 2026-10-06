@@ -1,0 +1,221 @@
+/* Copié par outils/demo : ne pas modifier ici, refaire la démo */
+@font-face { font-family: "Inter"; src: url("fonts/inter.woff2") format("woff2"); font-weight: 100 900; font-display: swap; }
+/* Base commune des démos (outils/demo) : structure et accessibilité des blocs partagés. Les couleurs et polices passent
+   par les variables ci-dessous ; le style.css de la commande les redéfinit et ajoute son design.
+   Règles tenues ici : contrastes ≥ 4,5 avec les valeurs par défaut, aucune ombre de texte, aucun drop-shadow ni
+   mask-image (Safari les repeint à chaque image au-dessus d'une animation), animations coupées si le visiteur le demande. */
+
+:root {
+  --fond: #F7F5F0;
+  --surface: #FFFFFF;
+  --encre: #1C2420;
+  --texte: #36403B;
+  --discret: #59625C;
+  --accent: #2E5A4C;
+  --accent-fonce: #1F4036;
+  --accent-pale: #E2ECE6;
+  --sur-accent: #FFFFFF;
+  --chaud: #8A4F1D;
+  --etoile: #9A5B0E;
+  --erreur: #A8261B;
+  --bord: #CFC8B8;
+  --pied-fond: #1C2420;
+  --pied-texte: #D3DAD5;
+  --police-titre: "Fraunces", Georgia, serif;
+  --police-texte: "Inter", system-ui, sans-serif;
+  --rayon: 16px;
+  --ombre: 0 18px 40px -22px rgba(20, 30, 25, .35);
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+body { margin: 0; font-family: var(--police-texte); font-size: 17px; line-height: 1.65; color: var(--texte); background: var(--fond); }
+img, svg { display: block; max-width: 100%; height: auto; }
+a { color: var(--accent); text-underline-offset: 3px; }
+a:hover { color: var(--accent-fonce); }
+h1, h2, h3 { font-family: var(--police-titre); color: var(--encre); line-height: 1.15; margin: 0 0 .5em; font-weight: 600; }
+h1 { font-size: clamp(2rem, 5vw, 3.3rem); }
+h2 { font-size: clamp(1.6rem, 3.4vw, 2.4rem); }
+h3 { font-size: 1.25rem; }
+p { margin: 0 0 1em; }
+:focus-visible { outline: 3px solid var(--chaud); outline-offset: 3px; }
+.conteneur { width: min(1180px, 100% - 40px); margin-inline: auto; }
+main section { padding: clamp(48px, 7vw, 96px) 0; }
+.surtitre { display: inline-block; font-size: .8rem; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: var(--chaud); margin-bottom: 12px; }
+.intro { font-size: 1.12rem; max-width: 640px; }
+.centre { text-align: center; }
+.centre .intro { margin-inline: auto; }
+.petit { font-size: .85rem; color: var(--discret); }
+.fond-surface { background: var(--surface); }
+.visuellement-cache { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+
+/* Bandeau de démonstration */
+.bandeau-demo { background: var(--chaud); color: #fff; font-size: .82rem; text-align: center; padding: 8px 16px; line-height: 1.4; }
+
+/* Boutons */
+.bouton { display: inline-flex; align-items: center; justify-content: center; gap: 10px; background: var(--accent); color: var(--sur-accent); border: 0; border-radius: 999px; padding: 14px 26px; font: 600 1rem/1.2 var(--police-texte); text-decoration: none; cursor: pointer; transition: background .2s; }
+.bouton:hover { background: var(--accent-fonce); color: var(--sur-accent); }
+.bouton svg { width: 20px; height: 20px; flex: none; }
+.bouton-ligne { background: transparent; color: var(--accent-fonce); box-shadow: inset 0 0 0 2px var(--accent-fonce); }
+.bouton-ligne:hover { background: var(--accent-fonce); color: var(--sur-accent); }
+.boutons { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 26px; }
+.centre .boutons { justify-content: center; }
+.lien-bouton { background: none; border: 0; padding: 0; font: inherit; color: inherit; text-decoration: underline; cursor: pointer; }
+
+/* En-tête et menu */
+.entete { position: sticky; top: 0; z-index: 50; background: var(--fond); transition: box-shadow .2s; }
+.entete.defile { box-shadow: 0 6px 24px -14px rgba(20, 30, 25, .4); }
+.entete .conteneur { display: flex; align-items: center; justify-content: space-between; gap: 20px; min-height: 76px; }
+.marque { display: flex; align-items: center; gap: 12px; text-decoration: none; color: var(--encre); }
+.marque svg { width: 44px; height: 44px; flex: none; }
+.marque-nom { display: flex; flex-direction: column; line-height: 1.15; }
+.marque-nom strong { font-family: var(--police-titre); font-size: 1.25rem; font-weight: 600; }
+.marque-nom span { font-size: .78rem; letter-spacing: .08em; text-transform: uppercase; color: var(--chaud); }
+.nav ul { list-style: none; margin: 0; padding: 0; display: flex; align-items: center; gap: 4px; }
+.nav a, .nav .ouvrir-sous-menu { display: block; padding: 10px 14px; border-radius: 999px; color: var(--encre); text-decoration: none; font: 500 .98rem var(--police-texte); background: none; border: 0; cursor: pointer; }
+.nav a:hover, .nav .ouvrir-sous-menu:hover, .nav a[aria-current="page"] { background: var(--accent-pale); color: var(--accent-fonce); }
+.nav .bouton, .nav .bouton:hover { color: var(--sur-accent); background: var(--accent); padding: 12px 22px; }
+.nav .bouton:hover { background: var(--accent-fonce); }
+.sous-menu { position: relative; }
+.sous-menu ul { display: none; position: absolute; top: calc(100% + 6px); left: 0; min-width: 260px; background: var(--surface); border-radius: 14px; box-shadow: var(--ombre); padding: 8px; flex-direction: column; align-items: stretch; gap: 2px; }
+.sous-menu ul::before { content: ""; position: absolute; left: 0; right: 0; top: -12px; height: 12px; }
+.sous-menu:hover ul, .sous-menu:has(:focus-visible) ul, .sous-menu.ouvert ul { display: flex; }
+.bouton-menu { display: none; width: 48px; height: 48px; border: 0; background: var(--accent-pale); border-radius: 12px; cursor: pointer; flex-direction: column; justify-content: center; align-items: center; gap: 5px; }
+.bouton-menu span { width: 22px; height: 2px; background: var(--accent-fonce); border-radius: 2px; }
+
+/* Pied de page */
+.pied { background: var(--pied-fond); color: var(--pied-texte); padding: 56px 0 110px; font-size: .95rem; }
+.pied .marque, .pied .pied-titre { color: #fff; }
+.pied .marque-nom span { color: var(--pied-texte); }
+.pied-grille { display: grid; grid-template-columns: 1.3fr repeat(3, 1fr); gap: 32px; }
+.pied-texte { margin-top: 18px; max-width: 340px; }
+.pied-titre { font-size: 1.05rem; margin-bottom: 12px; }
+.pied ul { list-style: none; margin: 0; padding: 0; }
+.pied li { padding: 4px 0; }
+.pied a, .pied .lien-bouton { color: var(--pied-texte); }
+.pied a { text-decoration: none; }
+.pied a:hover { color: #fff; text-decoration: underline; }
+.pied-bas { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px; border-top: 1px solid rgba(255, 255, 255, .16); margin-top: 40px; padding-top: 20px; font-size: .85rem; }
+
+/* Barre d'appel sur téléphone (affichée sous 900 px) */
+.barre-mobile { display: none; }
+
+/* Bannière cookies */
+.cookies { position: fixed; left: 20px; bottom: 20px; z-index: 100; width: min(440px, calc(100% - 40px)); background: var(--surface); color: var(--texte); border-radius: 20px; padding: 22px; box-shadow: 0 24px 60px -20px rgba(0, 0, 0, .45); display: none; }
+.cookies.visible { display: block; }
+.cookies h2 { font-size: 1.2rem; }
+.cookies p { font-size: .92rem; }
+.cookies-actions { display: flex; flex-wrap: wrap; gap: 10px; }
+.cookies-actions .bouton { padding: 11px 16px; font-size: .92rem; flex: 1 1 auto; white-space: nowrap; }
+.cookies-detail { display: none; margin-top: 16px; border-top: 1px solid var(--bord); padding-top: 12px; }
+.cookies-detail.ouvert { display: block; }
+.categorie { display: flex; justify-content: space-between; gap: 16px; align-items: center; padding: 10px 0; font-size: .9rem; }
+.categorie span { display: block; color: var(--discret); font-size: .83rem; }
+.interrupteur { width: 22px; height: 22px; accent-color: var(--accent); }
+
+/* Étoiles et avis */
+.etoiles { display: inline-block; color: var(--etoile); letter-spacing: 3px; font-size: 1.05rem; line-height: 1; }
+.grille-avis { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-top: 36px; text-align: left; }
+.avis { margin: 0; background: var(--surface); border-radius: var(--rayon); padding: 24px; box-shadow: var(--ombre); display: flex; flex-direction: column; }
+.avis blockquote { margin: 12px 0 18px; flex: 1; }
+.avis blockquote p { margin: 0; }
+.avis .auteur { display: flex; align-items: center; gap: 12px; font-size: .9rem; }
+.avis .initiale { width: 40px; height: 40px; flex: none; border-radius: 50%; display: grid; place-items: center; background: var(--accent-pale); color: var(--accent-fonce); font-weight: 600; }
+.avis .auteur span span { color: var(--discret); display: block; font-size: .85rem; }
+
+/* Étapes numérotées */
+.etapes { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin-top: 36px; counter-reset: etape; list-style: none; padding: 0; }
+.etapes li { background: var(--surface); border-radius: var(--rayon); padding: 24px 22px; box-shadow: var(--ombre); }
+.etapes li::before { counter-increment: etape; content: counter(etape); display: grid; place-items: center; width: 42px; height: 42px; border-radius: 50%; background: var(--accent-pale); color: var(--accent-fonce); font: 600 1.15rem var(--police-titre); margin-bottom: 12px; }
+.etapes h3 { font-size: 1.1rem; }
+.etapes p { font-size: .95rem; margin: 0; }
+
+/* Réalisations : cartes, avant / après, filtres */
+.grille-realisations { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-top: 36px; }
+.realisation { background: var(--surface); border-radius: var(--rayon); overflow: hidden; box-shadow: var(--ombre); }
+.realisation[hidden] { display: none; }
+.realisation .corps { padding: 18px 22px 22px; }
+.realisation .lieu { font-size: .85rem; color: var(--chaud); font-weight: 600; letter-spacing: .04em; text-transform: uppercase; }
+.realisation h3 { margin: 6px 0 8px; font-size: 1.15rem; }
+.realisation p { font-size: .95rem; margin: 0; }
+.realisation .visuel { aspect-ratio: 3 / 2; overflow: hidden; }
+.realisation .visuel > * { width: 100%; height: 100%; object-fit: cover; }
+.avant-apres { position: relative; aspect-ratio: 3 / 2; overflow: hidden; background: var(--accent-pale); --pos: 50%; }
+.avant-apres .avant, .avant-apres .apres { position: absolute; inset: 0; }
+.avant-apres svg, .avant-apres img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.avant-apres .apres { clip-path: inset(0 0 0 var(--pos)); }
+.avant-apres .poignee { position: absolute; top: 0; bottom: 0; left: var(--pos); width: 3px; background: #fff; transform: translateX(-50%); pointer-events: none; }
+.avant-apres .poignee::after { content: "⇆"; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 40px; height: 40px; border-radius: 50%; background: #fff; color: var(--accent-fonce); display: grid; place-items: center; font-size: 1.1rem; box-shadow: 0 4px 14px rgba(0, 0, 0, .25); }
+.avant-apres input[type=range] { position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0; cursor: ew-resize; margin: 0; }
+.avant-apres .etiquette { position: absolute; top: 12px; background: rgba(20, 28, 24, .85); color: #fff; font-size: .72rem; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; padding: 4px 10px; border-radius: 999px; pointer-events: none; }
+.avant-apres .etiquette.g { left: 12px; }
+.avant-apres .etiquette.d { right: 12px; }
+.avant-apres:has(input:focus-visible) { outline: 3px solid var(--chaud); outline-offset: 3px; }
+.filtres { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 26px; }
+.filtre { border: 0; background: var(--surface); color: var(--accent-fonce); border-radius: 999px; padding: 10px 18px; font: 500 .95rem var(--police-texte); cursor: pointer; box-shadow: inset 0 0 0 1.5px var(--bord); }
+.filtre[aria-pressed="true"] { background: var(--accent-fonce); color: var(--sur-accent); box-shadow: none; }
+
+/* Formulaire factice */
+form[data-formulaire] { background: var(--surface); border-radius: 22px; padding: clamp(22px, 4vw, 40px); box-shadow: var(--ombre); }
+fieldset { border: 0; padding: 0; margin: 0 0 24px; }
+legend { font: 600 1.2rem var(--police-titre); color: var(--encre); margin-bottom: 12px; padding: 0; }
+.champs { display: grid; grid-template-columns: 1fr 1fr; gap: 16px 18px; }
+.champ { display: flex; flex-direction: column; gap: 6px; }
+.champ.plein { grid-column: 1 / -1; }
+.champ label, .champ .libelle { font-weight: 500; font-size: .95rem; color: var(--encre); }
+.obligatoire { color: var(--erreur); }
+.champ input, .champ select, .champ textarea { font: inherit; font-size: 1rem; padding: 12px 14px; border: 1.5px solid var(--bord); border-radius: 12px; background: #fff; color: var(--encre); width: 100%; }
+.champ input:focus, .champ select:focus, .champ textarea:focus { border-color: var(--accent); outline: none; box-shadow: 0 0 0 3px var(--accent-pale); }
+.champ textarea { min-height: 130px; resize: vertical; }
+.champ.invalide input, .champ.invalide select, .champ.invalide textarea { border-color: var(--erreur); }
+.erreur { color: var(--erreur); font-size: .85rem; min-height: 1em; }
+.erreur-accord { display: block; }
+.puces { display: flex; flex-wrap: wrap; gap: 10px; }
+.puces label { position: relative; }
+.puces input { position: absolute; opacity: 0; }
+.puces span { display: inline-block; padding: 10px 16px; border-radius: 999px; background: var(--fond); box-shadow: inset 0 0 0 1.5px var(--bord); cursor: pointer; font-weight: 500; font-size: .93rem; color: var(--encre); }
+.puces input:checked + span { background: var(--accent); color: var(--sur-accent); box-shadow: none; }
+.puces input:focus-visible + span { outline: 3px solid var(--chaud); outline-offset: 2px; }
+.accord { display: flex; gap: 12px; align-items: flex-start; font-size: .9rem; margin-top: 8px; }
+.accord input { width: 20px; height: 20px; margin-top: 3px; accent-color: var(--accent); flex: none; }
+.pot-de-miel { position: absolute; left: -9999px; }
+.succes { display: none; background: var(--surface); border-radius: 22px; padding: 36px; box-shadow: var(--ombre); }
+.succes.visible { display: block; }
+.mention-form { font-size: .85rem; color: var(--discret); margin-top: 14px; }
+
+/* Textes légaux */
+.texte-legal { max-width: 780px; }
+.texte-legal h2 { font-size: 1.35rem; margin-top: 1.6em; }
+
+@media (max-width: 1000px) {
+  .grille-avis, .grille-realisations { grid-template-columns: 1fr 1fr; }
+  .pied-grille { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 900px) {
+  .bouton-menu { display: flex; }
+  .nav { display: none; position: absolute; top: 100%; left: 0; right: 0; background: var(--fond); padding: 12px 20px 24px; box-shadow: 0 16px 30px -18px rgba(0, 0, 0, .35); max-height: calc(100vh - 110px); overflow-y: auto; }
+  .nav.ouvert { display: block; }
+  .nav ul { flex-direction: column; align-items: stretch; }
+  .sous-menu ul { display: flex; position: static; box-shadow: none; background: transparent; padding: 0 0 0 14px; min-width: 0; }
+  .sous-menu .ouvrir-sous-menu { display: none; }
+  .nav .bouton { margin-top: 8px; text-align: center; }
+  .barre-mobile { display: grid; grid-auto-flow: column; grid-auto-columns: 1fr; gap: 10px; position: fixed; left: 0; right: 0; bottom: 0; z-index: 60; padding: 10px 14px calc(10px + env(safe-area-inset-bottom)); background: var(--fond); box-shadow: 0 -8px 24px -12px rgba(0, 0, 0, .3); }
+  .barre-mobile .bouton { padding: 14px 10px; }
+  .cookies { bottom: 84px; left: 12px; width: calc(100% - 24px); }
+}
+@media (max-width: 640px) {
+  body { font-size: 16px; }
+  .grille-avis, .grille-realisations, .champs, .pied-grille { grid-template-columns: 1fr; }
+  .boutons .bouton { flex: 1 1 100%; }
+}
+
+/* Réduire les animations : tout s'arrête, sauf dans [data-mouvement="toujours"] (page dont l'animation est le sujet ;
+   option mouvement: "toujours" de page()). Le poste de Tim a ce réglage actif : vérifier les deux cas. */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *:not([data-mouvement="toujours"], [data-mouvement="toujours"] *),
+  *:not([data-mouvement="toujours"], [data-mouvement="toujours"] *)::before,
+  *:not([data-mouvement="toujours"], [data-mouvement="toujours"] *)::after {
+    animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition: none !important;
+  }
+}
