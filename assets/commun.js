@@ -25,6 +25,10 @@
       boutonMenu.setAttribute("aria-expanded", String(ouvert));
       boutonMenu.setAttribute("aria-label", ouvert ? "Fermer le menu" : "Ouvrir le menu");
     });
+    // Échap referme le menu
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape" && nav.classList.contains("ouvert")) { boutonMenu.click(); boutonMenu.focus(); }
+    });
   }
   // Sous-menus : clic pour ouvrir, clic ailleurs ou Échap pour fermer
   const sousMenus = document.querySelectorAll(".sous-menu");
