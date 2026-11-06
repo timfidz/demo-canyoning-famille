@@ -156,3 +156,25 @@ main section { padding: 0; }
   .resume dd { grid-column: 2; }
   .jour summary { grid-template-columns: 52px 1fr 28px; }
 }
+
+/* Menu sur une ligne entre le téléphone et l'ordinateur, plus serré et sans le numéro, repris ailleurs dans la page (06/11) */
+@media (min-width: 901px) and (max-width: 1180px) {
+  .entete:not(.entete-rideau) > .conteneur { gap: 14px; }
+  .entete:not(.entete-rideau) .marque-nom :is(strong, span) { white-space: nowrap; }
+  .entete:not(.entete-rideau) .nav :is(a, .ouvrir-sous-menu) { white-space: nowrap; }
+  .entete:not(.entete-rideau) .nav li > :is(a:not(.bouton), .ouvrir-sous-menu) { padding-inline: 8px; margin-inline: 0; font-size: .93rem; }
+  .entete:not(.entete-rideau) .nav .bouton, .entete:not(.entete-rideau) .nav .bouton:hover { padding: 10px 14px; font-size: .93rem; }
+  .entete:not(.entete-rideau, .entete-deux-etages) .nav a[href^="tel:"]:not(.bouton) { display: none; }
+}
+
+/* Menu trop long pour une ligne : le burger reste jusqu'à 1020 px, mêmes règles que sous 900 px (06/11) */
+@media (min-width: 901px) and (max-width: 1020px) {
+  .bouton-menu { display: flex; }
+  .nav { display: none; position: absolute; top: 100%; left: 0; right: 0; background: var(--fond); padding: 12px 20px 24px; box-shadow: 0 16px 30px -18px rgba(0, 0, 0, .35); max-height: calc(100vh - 110px); overflow-y: auto; }
+  .nav.ouvert { display: block; }
+  .nav ul { flex-direction: column; align-items: stretch; }
+  .sous-menu ul { display: flex; position: static; box-shadow: none; background: transparent; padding: 0 0 0 14px; min-width: 0; }
+  .sous-menu .ouvrir-sous-menu { display: none; }
+  .nav .bouton { margin-top: 8px; text-align: center; }
+  .entete:not(.entete-rideau, .entete-deux-etages) .nav a[href^="tel:"]:not(.bouton) { display: block; }
+}
